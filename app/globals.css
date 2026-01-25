@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --text-color: #9b9b9b;
-  --text-color-fade: #707070;
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --primary: #A855F7;
+  --fade-text: #9b9b9b;
+  --border: #202020;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-text-color: var(--text-color);
-  --color---text-color-fade: var(--text-color-fade);
+  --color-primary: var(--primary);
+  --color-fade-text: var(--fade-text);
+  --color-border: var(--border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -19,12 +21,65 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
-    --foreground: #ededed;
+    --foreground: #ffffff;
+    --primary: #A855F7;
+    --fade-text: #9b9b9b;
+    --border: #202020;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Glowing Boredr */
+
+@layer utilities {
+  .glow-border {
+    position: relative;
+    overflow: visible !important;
+  }
+
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(40px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(168, 85, 247, 0.8),
+        transparent 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .glow-border-clip {
+    overflow: hidden !important;
+  }
+
+  .glow-border-clip::before {
+    inset: 0;
+  }
+
+  .glow-border:hover::before {
+    opacity: 1;
+  }
+}
+
+/* Hide Scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+}
+
+body {
+  scrollbar-width: none;
 }

@@ -1,17 +1,46 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import LenisProvider from "@/components/lenis";
+import LenisProvider from "@/components/layout/lenis";
+import Header from "@/components/layout/header";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+export const neueMontreal = localFont({
+  src: [
+    {
+      path: "../public/assets/fonts/ppneuemontreal-thin.woff",
+      weight: "100",
+      style: "normal",
+    },
+    {
+      path: "../public/assets/fonts/ppneuemontreal-book.woff",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/assets/fonts/ppneuemontreal-medium.woff",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/assets/fonts/ppneuemontreal-bold.woff",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/assets/fonts/ppneuemontreal-italic.woff",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../public/assets/fonts/ppneuemontreal-semibolditalic.woff",
+      weight: "600",
+      style: "italic",
+    },
+  ],
+  variable: "--font-neue-montreal",
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Model portfolio",
@@ -20,15 +49,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${neueMontreal.variable} antialiased`}>
         <LenisProvider>
+          <Header />
           {children}
         </LenisProvider>
       </body>
