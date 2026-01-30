@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 import { useGSAP } from '@gsap/react';
 import LiveTime from '@/components/ui/live-time';
 import AnimatedLink from '@/components/ui/animated-link';
+import AnimatedButton from '@/components/ui/animated-button';
 
 interface FullScreenMenuProps {
     isOpen: boolean;
@@ -19,11 +20,9 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
     useGSAP(() => {
         const ctx = gsap.context(() => {
             if (isOpen) {
-                // Set initial display and position
                 gsap.set(menuRef.current, { display: 'flex' });
 
-                // Opening animation - shutter from top to bottom
-                const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
+                const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
                 tl.fromTo(menuRef.current,
                     {
@@ -34,24 +33,39 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
                         clipPath: 'inset(0% 0% 0% 0%)',
                         duration: 1
                     }
-                )
-                    .fromTo('.menu-box',
-                        { y: -60, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 0.3, stagger: 0.08 },
-                        '-=0.4'
-                    )
-                    .fromTo('.menu-nav-link',
-                        { y: 40, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 0.3, stagger: 0.1 },
-                        '-=0.4'
-                    )
-                    .fromTo('.menu-social',
-                        { opacity: 0, y: 20 },
-                        { opacity: 1, y: 0, duration: 0.3, stagger: 0.1 },
-                        '-=0.3'
-                    );
+                );
+
+                tl.fromTo('.menu-box',
+                    { opacity: 0, x: -30 },
+                    { opacity: 1, x: 0, duration: 0.6, stagger: 0.1 },
+                    '-=0.6'
+                );
+
+                tl.fromTo('.menu-nav-link',
+                    { opacity: 0, y: 20 },
+                    { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
+                    '-=0.8'
+                );
+
+                tl.fromTo('.menu-contact',
+                    { opacity: 0, filter: 'blur(10px)' },
+                    { opacity: 1, filter: 'blur(0px)', duration: 0.8, stagger: 0.06 },
+                    '-=0.9'
+                );
+
+                tl.fromTo('.menu-social',
+                    { opacity: 0, x: 20 },
+                    { opacity: 1, x: 0, duration: 0.6, stagger: 0.08 },
+                    '-=0.9'
+                );
+
+                tl.fromTo('.menu-time',
+                    { opacity: 0 },
+                    { opacity: 1, duration: 0.5 },
+                    '-=0.8'
+                );
+
             } else if (menuRef.current && menuRef.current.style.display !== 'none') {
-                // Closing animation - shutter from bottom to top
                 const tl = gsap.timeline({
                     defaults: { ease: 'power3.inOut' },
                     onComplete: () => {
@@ -103,69 +117,76 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
                 ref={contentRef}
                 className="relative w-full h-full flex flex-col"
             >
-                <div className="w-full h-1/3 flex justify-between gap-3 p-5">
-                    <div className="menu-box bg-background rounded-xs w-1/3 flex justify-center items-center cursor-pointer">
-                        <span className="text-foreground">Reels</span>
+                <div className="w-full h-1/6 md:h-[30vh] flex md:justify-between gap-3 p-5">
+                    <div className="menu-box w-1/3 rounded-xs overflow-hidden hidden md:block">
+                        <AnimatedButton
+                            hoverBgVideo="/assets/videos/portfolio.mp4"
+                            dotColor='#E0B0FF'
+                        >
+                            Show Reel
+                        </AnimatedButton>
+
                     </div>
 
-                    <button
-                        onClick={onClose}
-                        className="menu-box md:p-4 bg-background rounded-xs w-1/3 flex justify-center items-center cursor-pointer"
-                    >
-                        <span className="text-foreground uppercase text-2xl font-light">×</span>
-                    </button>
+                    <div className="menu-box w-1/2 md:w-1/3 rounded-xs overflow-hidden" >
+                        <AnimatedButton
+                            onClick={onClose}
+                            hoverBgColor="#FF9E99"
+                            showDot={false}
+                        >
+                            X
+                        </AnimatedButton>
+                    </div>
 
-                    <Link
-                        href="/contact"
-                        onClick={onClose}
-                        className="menu-box bg-background rounded-xs w-1/3 flex justify-center items-center"
-                    >
-                        <span className="text-foreground">Contact</span>
-                    </Link>
+                    <div className="menu-box w-1/2 md:w-1/3 rounded-xs overflow-hidden">
+                        <AnimatedButton href="/contact" onClick={onClose}>
+                            Contact Us
+                        </AnimatedButton>
+                    </div>
                 </div>
 
-                <div className='w-full h-2/3 flex-1 flex row'>
-                    <div className="w-2/3 flex-1 flex flex-col items-start p-5 justify-start">
+                <div className='w-full h-5/6 flex-1 flex flex-col md:flex-row'>
+                    <div className="w-full md:w-2/3 flex flex-col items-start p-5 justify-start">
                         <nav className="flex flex-col items-start gap-3">
                             <Link
                                 href="/"
                                 onClick={onClose}
-                                className="menu-nav-link text-8xl font-extralight flex items-center"
+                                className="menu-nav-link text-4xl md:text-8xl font-extralight flex items-center"
                             >
-                                <span className="dot mr-4 text-5xl">•</span>
+                                <span className="dot mr-4 text-2xl md:text-5xl">•</span>
                                 <span className="link-text">Home</span>
                             </Link>
                             <Link
                                 href="/work"
                                 onClick={onClose}
-                                className="menu-nav-link text-8xl font-extralight flex items-center"
+                                className="menu-nav-link text-4xl md:text-8xl font-extralight flex items-center"
                             >
-                                <span className="dot mr-4 text-5xl">•</span>
+                                <span className="dot mr-4 text-2xl md:text-5xl">•</span>
                                 <span className="link-text">Work</span>
                             </Link>
                             <Link
                                 href="/about"
                                 onClick={onClose}
-                                className="menu-nav-link text-8xl font-extralight flex items-center"
+                                className="menu-nav-link text-4xl md:text-8xl font-extralight flex items-center"
                             >
-                                <span className="dot mr-4 text-5xl">•</span>
+                                <span className="dot mr-4 text-2xl md:text-5xl">•</span>
                                 <span className="link-text">About</span>
                             </Link>
                             <Link
                                 href="/services"
                                 onClick={onClose}
-                                className="menu-nav-link text-8xl font-extralight flex items-center"
+                                className="menu-nav-link text-4xl md:text-8xl font-extralight flex items-center"
                             >
-                                <span className="dot mr-4 text-5xl">•</span>
+                                <span className="dot mr-4 text-2xl md:text-5xl">•</span>
                                 <span className="link-text">Services</span>
                             </Link>
                         </nav>
                     </div>
 
-                    <div className="w-1/3 p-5">
+                    <div className="w-full md:w-1/3 p-5">
                         <div className='h-full'>
-                            <ul className="h-1/2 flex flex-col gap-1">
-                                <li className="menu-nav-link flex items-center">
+                            <ul className="md:h-1/2 pb-10 md:pb-0 flex flex-col gap-1">
+                                <li className="menu-contact flex items-center">
                                     <span className="mr-4 text-sm">•</span>
                                     <AnimatedLink
                                         href="https://wa.me/923029295335"
@@ -177,7 +198,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
                                     </AnimatedLink>
                                 </li>
 
-                                <li className="menu-nav-link flex items-center">
+                                <li className="menu-contact flex items-center">
                                     <span className="mr-4 text-sm">•</span>
                                     <AnimatedLink
                                         href="mailto:faizan.devstack@gmail.com"
@@ -187,7 +208,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
                                     </AnimatedLink>
                                 </li>
 
-                                <li className="menu-nav-link flex items-center">
+                                <li className="menu-contact flex items-center">
                                     <span className="mr-4 text-sm">•</span>
                                     <AnimatedLink
                                         href="https://www.google.com/maps/search/?api=1&query=Islamabad+Pakistan"
@@ -200,7 +221,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
                                 </li>
                             </ul>
 
-                            <div className='h-1/2 flex flex-row'>
+                            <div className='md:h-1/2 flex flex-row'>
                                 <div className="flex flex-col gap-2">
                                     <h3 className="menu-social text-foreground mb-3 text-xl">
                                         Social
@@ -234,7 +255,7 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
                                     </AnimatedLink>
                                 </div>
 
-                                <div className='flex flex-1 items-end justify-end'>
+                                <div className='menu-time flex flex-1 items-end justify-end'>
                                     <LiveTime />
                                 </div>
                             </div>
@@ -247,4 +268,4 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
     );
 };
 
-export default FullScreenMenu;  
+export default FullScreenMenu;

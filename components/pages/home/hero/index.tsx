@@ -27,11 +27,11 @@ const HeroSection = () => {
         })
 
         tl.to(nameRef.current, {
-            y: '60vh',
+            y: '-20vh',
             scale: 1.2,
         }, 'a')
             .to(titleRef.current, {
-                y: '-60vh',
+                y: '-30vh',
                 scale: 1.2,
             }, 'a')
             .to(imageRef.current, {
@@ -52,12 +52,11 @@ const HeroSection = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
                 className="
-                    text-[1.75rem]
-                    sm:text-[1.875rem]
+                text-[1.875rem]
                     md:text-[2.25rem]
                     lg:text-[3rem]
                     xl:text-[3.75rem]
-                    2xl:text-[4.1rem]
+                    2xl:text-[4rem]
                     font-serif font-extralight tracking-tight
                     absolute left-4 sm:left-8 md:left-12 lg:left-16
                     top-[18%] sm:top-[28%] 2xl:top-[38%]
@@ -73,12 +72,11 @@ const HeroSection = () => {
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
                 className="
-                    text-[1.75rem]
-                    sm:text-[1.875rem]
+                text-[1.875rem]
                     md:text-[2.25rem]
                     lg:text-[3rem]
                     xl:text-[3.75rem]
-                    2xl:text-[4.1rem]
+                    2xl:text-[4rem]
                     font-serif font-extralight tracking-tight
                     absolute right-4 sm:right-8 md:right-12 lg:right-16
                     top-[28%] sm:top-[46%] 2xl:top-[56%]

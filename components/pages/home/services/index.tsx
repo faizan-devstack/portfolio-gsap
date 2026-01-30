@@ -72,7 +72,7 @@ const ServicesSection = () => {
         fontSize: 'clamp(1.875rem, 7vw, 9rem)',
         opacity: 1,
         duration: 2,
-        ease: "power1.out",
+        ease: "power3.out",
         scrollTrigger: {
           trigger: section,
           start: "top bottom",
