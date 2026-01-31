@@ -42,8 +42,8 @@ const FullScreenMenu: React.FC<FullScreenMenuProps> = ({ isOpen, onClose }) => {
                 );
 
                 tl.fromTo('.menu-nav-link',
-                    { opacity: 0, y: 20 },
-                    { opacity: 1, y: 0, duration: 0.7, stagger: 0.08 },
+                    { opacity: 0, y: 20,  filter: 'blur(10px)' },
+                    { opacity: 1, y: 0, duration: 0.7, stagger: 0.08,  filter: 'blur(0px)' },
                     '-=0.8'
                 );
 

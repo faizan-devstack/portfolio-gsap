@@ -18,39 +18,39 @@ const ServicesSection = () => {
   const solutionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const items: Item[] = [
-  {
-    type: "problem",
-    text: "Does your website feel frustratingly slow?"
-  },
-  {
-    type: "solution",
-    text: "High performance Next.js architecture using the App Router, server components, image optimization, smart code loading, lazy loading, and edge caching. This delivers extremely fast load times and a smooth experience, even on mobile networks."
-  },
-  {
-    type: "problem",
-    text: "Is the mobile experience falling apart?"
-  },
-  {
-    type: "solution",
-    text: "A carefully crafted responsive design system built with modern CSS, Tailwind, and custom utilities. It features fluid typography, layouts designed for mobile first usage, touch friendly interactions, and thorough testing across real devices so it looks and feels natural on every screen size."
-  },
-  {
-    type: "problem",
-    text: "Struggling to get noticed on Google?"
-  },
-  {
-    type: "solution",
-    text: "Search focused development using semantic HTML, well structured metadata including Open Graph and Twitter Cards, schema markup, server rendering, dynamic sitemaps, robots.txt, strong Core Web Vitals, clean URLs, and a content strategy designed to improve real search visibility."
-  },
-  {
-    type: "problem",
-    text: "Does your interface feel outdated or clunky?"
-  },
-  {
-    type: "solution",
-    text: "A polished and modern interface enhanced with GSAP animations. This includes smooth scroll based animations, subtle parallax effects, thoughtful micro interactions, refined page transitions, expressive hover states, and consistent performance across all devices."
-  }
-];
+    {
+      type: "problem",
+      text: "Does your website feel frustratingly slow?"
+    },
+    {
+      type: "solution",
+      text: "High performance Next.js architecture using the App Router, server components, image optimization, smart code loading, lazy loading, and edge caching. This delivers extremely fast load times and a smooth experience, even on mobile networks."
+    },
+    {
+      type: "problem",
+      text: "Is the mobile experience falling apart?"
+    },
+    {
+      type: "solution",
+      text: "A carefully crafted responsive design system built with modern CSS, Tailwind, and custom utilities. It features fluid typography, layouts designed for mobile first usage, touch friendly interactions, and thorough testing across real devices so it looks and feels natural on every screen size."
+    },
+    {
+      type: "problem",
+      text: "Struggling to get noticed on Google?"
+    },
+    {
+      type: "solution",
+      text: "Search focused development using semantic HTML, well structured metadata including Open Graph and Twitter Cards, schema markup, server rendering, dynamic sitemaps, robots.txt, strong Core Web Vitals, clean URLs, and a content strategy designed to improve real search visibility."
+    },
+    {
+      type: "problem",
+      text: "Does your interface feel outdated or clunky?"
+    },
+    {
+      type: "solution",
+      text: "A polished and modern interface enhanced with GSAP animations. This includes smooth scroll based animations, subtle parallax effects, thoughtful micro interactions, refined page transitions, expressive hover states, and consistent performance across all devices."
+    }
+  ];
 
   // Group into pairs
   const pairs: [Item, Item][] = [];
@@ -61,7 +61,7 @@ const ServicesSection = () => {
   useGSAP(() => {
     const section = sectionRef.current;
     const title = titleRef.current;
-    
+
     if (!section || !title) return;
 
     // Title scale + fade on scroll (unchanged)
@@ -71,8 +71,8 @@ const ServicesSection = () => {
       {
         fontSize: 'clamp(1.875rem, 7vw, 9rem)',
         opacity: 1,
-        duration: 2,
-        ease: "power3.out",
+        duration: 3,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: section,
           start: "top bottom",
@@ -81,7 +81,7 @@ const ServicesSection = () => {
         }
       }
     );
-    
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -96,13 +96,13 @@ const ServicesSection = () => {
     pairs.forEach((pair, index) => {
       const problemEl = problemRefs.current[index];
       const solutionEl = solutionRefs.current[index];
-      const startTime = index * 1.4;
+      const startTime = index === 0 ? 0 : index;
 
       if (problemEl) {
         tl.fromTo(
           problemEl,
-          { y: '100vh' },
-          { y: '-100vh', duration: 1.8, ease: "none" },
+          { y: '70vh' },
+          { y: '-60vh', duration: 1.7 , ease: "power3.out" },
           startTime
         );
       }
@@ -110,12 +110,25 @@ const ServicesSection = () => {
       if (solutionEl) {
         tl.fromTo(
           solutionEl,
-          { y: '100vh' },
-          { y: '-100vh', duration: 1.5, ease: "none" },
-          startTime + 0.15
+          { y: '75vh' },
+          { y: '-75vh', duration: 1.7 , ease: "power3.out" },
+          startTime
         );
       }
     });
+
+    // Title scrolls up with the last card
+    const lastPairStartTime = (pairs.length - 1);
+    tl.to(
+      title,
+      {
+        y: '-60vh',
+        opacity: 1,
+        duration: 2,
+        ease: "power2.in"
+      },
+      lastPairStartTime
+    );
   }, []);
 
   return (
@@ -155,7 +168,7 @@ const ServicesSection = () => {
                 p-5 sm:p-6 md:p-7 lg:p-8 
                 rounded-lg backdrop-blur-lg 
                 bg-foreground/5 border border-border/40 
-                shadow-xl w-full max-w-[90%] sm:max-w-md
+                w-full max-w-[90%] sm:max-w-md
               ">
                 <p className="
                   text-base sm:text-lg md:text-xl lg:text-2xl 
@@ -179,8 +192,8 @@ const ServicesSection = () => {
               <div className="
                 p-6 sm:p-7 md:p-8 lg:p-10 
                 rounded-lg backdrop-blur-lg 
-                bg-foreground/8 border border-border/40 
-                shadow-2xl w-full max-w-[90%] sm:max-w-xl
+                bg-foreground/5 border border-border/40
+                w-full max-w-[90%] sm:max-w-xl
               ">
                 <p className="
                   text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl 
