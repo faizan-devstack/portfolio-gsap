@@ -71,7 +71,7 @@ const ServicesSection = () => {
       {
         fontSize: 'clamp(1.875rem, 7vw, 9rem)',
         opacity: 1,
-        duration: 3,
+        duration: 1.5,
         ease: "power2.out",
         scrollTrigger: {
           trigger: section,
@@ -102,7 +102,7 @@ const ServicesSection = () => {
         tl.fromTo(
           problemEl,
           { y: '70vh' },
-          { y: '-60vh', duration: 1.7 , ease: "power3.out" },
+          { y: '-70vh', duration: 1.5 , ease: "none" },
           startTime
         );
       }
@@ -111,7 +111,7 @@ const ServicesSection = () => {
         tl.fromTo(
           solutionEl,
           { y: '75vh' },
-          { y: '-75vh', duration: 1.7 , ease: "power3.out" },
+          { y: '-75vh', duration: 1.5 , ease: "none" },
           startTime
         );
       }
